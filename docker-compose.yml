@@ -1,0 +1,27 @@
+version: '3'
+services:
+    auto-nginx:
+        build:
+            context: ./auto/docker/development
+            dockerfile: nginx.docker
+        volumes:
+            - ./auto:/app
+        depends_on:
+            - auto-php-fpm
+        ports:
+            - "8080:80"
+    auto-php-fpm:
+        build:
+            context: ./auto/docker/development
+            dockerfile: php-fpm.docker
+        volumes:
+            - ./auto:/app
+    auto-php-cli:
+        build:
+            context: ./auto/docker/development
+            dockerfile: php-cli.docker
+        volumes:
+            - ./auto:/app
+            - composer:/root/.composer/cache
+volumes:
+    composer:
